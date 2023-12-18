@@ -66,7 +66,7 @@ const Result = () => {
                             <img
                                 key={index}
                                 src={`/assets/images/${r}${
-                                    Math.floor(Math.random()) + 1
+                                    Math.floor(Math.random() * 2) + 1
                                 }.jpg`}
                             />
                         )
