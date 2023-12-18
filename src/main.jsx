@@ -24,7 +24,7 @@ const router = createBrowserRouter(
         },
     ],
     {
-        basename: '/fashion_project/',
+        basename: '/fashion_frontend/',
     },
 )
 
