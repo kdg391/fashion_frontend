@@ -8,20 +8,25 @@ import Result from './routes/Result.jsx'
 
 import './index.css'
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+    [
+        {
+            path: '/',
+            element: <Root />,
+        },
+        {
+            path: '/test',
+            element: <Test />,
+        },
+        {
+            path: '/result',
+            element: <Result />,
+        },
+    ],
     {
-        path: '/',
-        element: <Root />,
+        basename: '/fashion_project/',
     },
-    {
-        path: '/test',
-        element: <Test />,
-    },
-    {
-        path: '/result',
-        element: <Result />,
-    },
-])
+)
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
