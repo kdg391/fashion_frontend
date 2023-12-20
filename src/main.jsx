@@ -28,7 +28,7 @@ const router = createHashRouter(
         },
     ],
     {
-        basename: '/fashion_frontend/',
+        basename: '/',
     },
 )
 
