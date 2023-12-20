@@ -1,4 +1,3 @@
-// prettier-ignore
 export const QUESTIONS = [
     // 1번 질문
     {
@@ -82,7 +81,11 @@ export const QUESTIONS = [
                 "option": "노래도 좋지만 주말은 짧다! 친구들과 노는 게 우선이다. 무수한 DM을 보내기 시작한다.",
                 "operation": "sub+"
             }
-        ]
+        ],
+        "image": {
+            "url": "",
+            "reference": ""
+        }
     },
     // 5번 질문
     {
@@ -122,7 +125,11 @@ export const QUESTIONS = [
                 "option": "벌을 내려야할까 말아야 할까 머리 속에서 계속 고민이 된다. 일단 하루 가둬놓고 그동안 생각해보자.",
                 "operation": "dep+"
             }
-        ]
+        ],
+        "image": {
+            "url": "https://www.urbanbrush.net/web/wp-content/uploads/edd/2022/04/urbanbrush-20220429092252662917.jpg",
+            "reference": "어반브러시"
+        }
     },
     // 7번 질문
     {
@@ -194,7 +201,11 @@ export const QUESTIONS = [
                 "option": "못 들은 척 무시하고 옷을 찾는다.",
                 "operation": "main-"
             }
-        ]
+        ],
+        "image": {
+            "url": "",
+            "reference": ""
+        }
     },
     // 11번 질문
     {
@@ -219,3 +230,129 @@ export const QUESTIONS = [
         }
     }
 ]
+
+export const KEYWORDS_MAIN = ['어디로 튈지 모르고' ,'개성 있고', '자유분방하며', '편안하며', '꾸밈없고', '자연스러우면서', '패션 감각 있고', '트렌디하고', '품격있고', '우아하고', '멋쟁이이면서', '스타일리쉬하고', '디자이너가 꿈이며', '존경스럽고']
+export const KEYWORDS_SUB = ['부끄러운', '조용한', '내성적인', '순수한', '따뜻한', '친절한', '유머러스한', '긍정적인', '열정적인', '도전적인', '독특한', '개성 있는']
+export const KEYWORDS_DEP = ['독수리', '코끼리', '호랑이', '사자', '토끼', '거북이', '고슴도치']
+
+export const CLOTHES_OUTER = [['롱패딩', '후드 집업'], ['재킷', '트러커 재킷'], ['숏패딩'], ['코트']]
+export const CLOTHES_INNER = [['후드'], ['맨투맨', '니트'], ['화이트 셔츠', '니트'], ['화이트 셔츠', '목폴라']]
+export const CLOTHES_UNDER = [['데님 팬츠', '슈트 팬츠'], ['데님 팬츠', '조거 팬츠'], ['데님 팬츠', '코튼 팬츠'], ['데님 팬츠']]
+
+export const ANIMAL_EMOJIS = {
+    독수리: '🦅',
+    코끼리: '🐘',
+    호랑이: '🐯',
+    사자: '🦁',
+    토끼: '🐰',
+    거북이: '🐢',
+    고슴도치: '🦔',
+}
+
+export function calcTotal(operations) {
+    let totalMain = 0
+    let totalSub = 0
+    let dep = 0
+
+    for (const val of operations) {
+        let increase
+
+        if (val[val.length - 1] === '+') {
+            increase = 1
+        } else {
+            increase = -1
+        }
+
+        if (val[0] === 'm') {
+            totalMain += increase
+        } else if (val[0] === 's') {
+            totalSub += increase
+        } else {
+            dep++
+        }
+    }
+
+    return {
+        totalMain,
+        totalSub,
+        dep,
+    }
+}
+
+function randint(max, min) {
+    return Math.floor(Math.random() * (max - min + 1)) + min
+}
+
+function combinationProcess(clothes, num) {
+    if (clothes[num].length > 1) {
+        const randNum = randint(0, clothes[num].length - 1)
+        const element = clothes[num][randNum]
+
+        return element
+    } else
+        return clothes[num][0]
+}
+
+function getRecommendations(totalMain, totalSub) {
+    let typeNum
+
+    if (totalMain > -7 && totalMain <= -3)
+        typeNum = 0
+    else if (totalMain > -3 && totalMain < 0)
+        typeNum = 1
+    else if (totalMain >= 0 && totalMain < 4)
+        typeNum = 2
+    else
+        typeNum = 3
+
+    let userAdv // advanture type
+
+    if (totalSub > 0)
+        userAdv = 'go'
+    else
+        userAdv = 'no'
+
+    const result = []
+    
+    if (userAdv[0] === 'n') {
+        result.push(combinationProcess(CLOTHES_OUTER, typeNum))
+        result.push(combinationProcess(CLOTHES_INNER, typeNum))
+        result.push(combinationProcess(CLOTHES_UNDER, typeNum))
+    } else {
+        let outer, inner, under
+
+        if (typeNum > 1 && typeNum < 4) { // 2 또는 3인 경우
+            outer = randint(typeNum - 1, typeNum + 1)
+            inner = randint(typeNum - 1, typeNum + 1)
+            under = randint(typeNum - 1, typeNum + 1)
+        } else if (typeNum === 1) {
+            outer = randint(typeNum, typeNum + 1)
+            inner = randint(typeNum, typeNum + 1)
+            under = randint(typeNum, typeNum + 1)
+        } else {
+            outer = randint(typeNum - 1, typeNum)
+            inner = randint(typeNum - 1, typeNum)
+            under = randint(typeNum - 1, typeNum)
+        }
+    
+        result.push(combinationProcess(CLOTHES_OUTER, outer))
+        result.push(combinationProcess(CLOTHES_INNER, inner))
+        result.push(combinationProcess(CLOTHES_UNDER, under))
+    }
+
+    return result
+}
+
+export function getData(operations) {
+    const { totalMain, totalSub, dep } = calcTotal(operations)
+    const recommendations = getRecommendations(totalMain, totalSub)
+    
+    return {
+        keywords: {
+            main: KEYWORDS_MAIN[totalMain + 7],
+            sub: KEYWORDS_SUB[totalSub + 5],
+            dep: KEYWORDS_DEP[dep],
+        },
+        recommendations,
+    }
+}

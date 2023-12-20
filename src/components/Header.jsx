@@ -6,13 +6,13 @@ const Header = (props) => (
     <header>
         <div id="title">
             <h1>{props.title}</h1>
-            {props?.data !== undefined && (
+            {props?.data && (
                 <div id="progress-text">
                     {props.data.curIndex + 1} / {QUESTIONS.length}
                 </div>
             )}
         </div>
-        {props?.data !== undefined && (
+        {props?.data && (
             <div id="progress">
                 <div
                     id="progress-bar"

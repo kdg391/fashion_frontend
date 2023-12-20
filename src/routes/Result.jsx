@@ -3,6 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 import Header from '../components/Header.jsx'
 
+import { ANIMAL_EMOJIS, getData } from '../constants.js'
+
 const Result = () => {
     const [result, setResult] = useState({})
     const [isLoading, setIsLoading] = useState(true)
@@ -36,6 +38,14 @@ const Result = () => {
                 })
             } catch (err) {
                 console.error(err)
+
+                const data = getData(location?.state.answers)
+                setIsLoading(false)
+                setResult(data)
+
+                navigate(location.pathname, {
+                    replace: true,
+                })
             }
         } else {
             navigate('/', {
@@ -51,28 +61,45 @@ const Result = () => {
     return (
         <>
             <Header title="테스트 결과" />
-            {isLoading ? (
-                <p>결과 불러오는 중</p>
-            ) : (
-                <>
-                    <p>
-                        {result?.keywords.main} {result?.keywords.sub}{' '}
-                        {result?.keywords.dep}
-                    </p>
-                    <h4>추천 패션</h4>
-                    <p>{result?.recommendations.join(', ')}</p>
-                    {result?.recommendations.map((r, index) => {
-                        return (
-                            <img
-                                key={index}
-                                src={`/assets/images/${r}${
-                                    Math.floor(Math.random() * 2) + 1
-                                }.jpg`}
-                            />
-                        )
-                    })}
-                </>
-            )}
+            <main>
+                <section>
+                    {isLoading ? (
+                        <p>결과 불러오는 중</p>
+                    ) : (
+                        <>
+                            <p
+                                style={{
+                                    fontSize: '1.25rem',
+                                }}
+                            >
+                                {result?.keywords.main} {result?.keywords.sub}{' '}
+                                {result?.keywords.dep}{' '}
+                                {ANIMAL_EMOJIS[result?.keywords.dep]}
+                            </p>
+                            <div>
+                                <h4>추천 패션</h4>
+                                <p>{result?.recommendations.join(', ')}</p>
+                                <div>
+                                    {result?.recommendations.map((r, index) => {
+                                        const oneOrTwo =
+                                            Math.floor(Math.random() * 2) + 1
+
+                                        return (
+                                            <img
+                                                key={index}
+                                                src={`./assets/images/clothes/${r}${oneOrTwo}.jpg`}
+                                                style={{
+                                                    aspectRatio: '1/1',
+                                                }}
+                                            />
+                                        )
+                                    })}
+                                </div>
+                            </div>
+                        </>
+                    )}
+                </section>
+            </main>
         </>
     )
 }

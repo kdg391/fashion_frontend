@@ -25,6 +25,13 @@ const Test = () => {
                             {image?.url !== undefined && (
                                 <div id="img-container">
                                     <img src={image.url} width={256} />
+                                    <span
+                                        style={{
+                                            fontSize: '.75rem',
+                                        }}
+                                    >
+                                        {image.reference}
+                                    </span>
                                 </div>
                             )}
                         </div>
