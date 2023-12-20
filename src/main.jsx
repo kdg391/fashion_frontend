@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { createHashRouter, RouterProvider } from 'react-router-dom'
 
 import Root from './routes/Root.jsx'
 import Test from './routes/Test.jsx'
@@ -8,7 +8,7 @@ import Result from './routes/Result.jsx'
 
 import './index.css'
 
-const router = createBrowserRouter(
+const router = createHashRouter(
     [
         {
             path: '/',
