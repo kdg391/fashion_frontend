@@ -3,7 +3,8 @@ import { useLocation, useNavigate } from 'react-router-dom'
 
 import Header from '../components/Header.jsx'
 
-import { ANIMAL_EMOJIS, getData } from '../constants.js'
+import { ANIMAL_EMOJIS } from '../constants.js'
+// import { getResult } from '../utils.js'
 
 const Result = () => {
     const [result, setResult] = useState({})
@@ -12,7 +13,7 @@ const Result = () => {
     const location = useLocation()
     const navigate = useNavigate()
 
-    const getResult = useCallback(async () => {
+    const showResult = useCallback(async () => {
         if (location.state?.answers) {
             try {
                 const res = await fetch(
@@ -39,13 +40,13 @@ const Result = () => {
             } catch (err) {
                 console.error(err)
 
-                const data = getData(location?.state.answers)
+                /*const data = getResult(location?.state.answers)
                 setIsLoading(false)
                 setResult(data)
 
                 navigate(location.pathname, {
                     replace: true,
-                })
+                })*/
             }
         } else {
             navigate('/', {
@@ -55,8 +56,8 @@ const Result = () => {
     }, [])
 
     useEffect(() => {
-        getResult()
-    }, [getResult])
+        showResult()
+    }, [showResult])
 
     return (
         <>
@@ -67,19 +68,15 @@ const Result = () => {
                         <p>결과 불러오는 중</p>
                     ) : (
                         <>
-                            <p
-                                style={{
-                                    fontSize: '1.25rem',
-                                }}
-                            >
+                            <p id="keyword">
                                 {result?.keywords.main} {result?.keywords.sub}{' '}
                                 {result?.keywords.dep}{' '}
                                 {ANIMAL_EMOJIS[result?.keywords.dep]}
                             </p>
                             <div>
-                                <h4>추천 패션</h4>
+                                <h3>추천 코디</h3>
                                 <p>{result?.recommendations.join(', ')}</p>
-                                <div>
+                                <div id="outfits">
                                     {result?.recommendations.map((r, index) => {
                                         const oneOrTwo =
                                             Math.floor(Math.random() * 2) + 1

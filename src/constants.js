@@ -83,8 +83,8 @@ export const QUESTIONS = [
             }
         ],
         "image": {
-            "url": "",
-            "reference": ""
+            "url": "https://img.lovepik.com/photo/50054/0427.jpg_wh860.jpg",
+            "reference": "LovePik"
         }
     },
     // 5번 질문
@@ -147,7 +147,11 @@ export const QUESTIONS = [
                 "option": "우리 ○○이 너무 예쁘겠다... 떨려...",
                 "operation": "dep+"
             }
-        ]
+        ],
+        "image": {
+            "url": "https://talkimg.imbc.com/TVianUpload/tvian/TViews/image/2022/07/31/f82d1c90-2b1b-45fe-bf75-ccf97433d08b.jpg",
+            "reference": "iMBC 연예"
+        }
     },
     // 8번 질문
     {
@@ -165,7 +169,11 @@ export const QUESTIONS = [
                 "option": "잘 모르겠는데...",
                 "operation": "dep+"
             }
-        ]
+        ],
+        "image": {
+            "url": "https://i.namu.wiki/i/EbBJQCwXxYWNbFnzMdIhErbA_GtVxUHQDKfzOrj29L7TtuZtCYQcw7n8JgdWoWn4BBravOlA6SL3HBo1w_DnCw.webp",
+            "reference": "나무위키"
+        }
     },
     // 9번 질문
     {
@@ -183,7 +191,11 @@ export const QUESTIONS = [
                 "option": "잡히는 옷 아무거나 입어야지. 목폴라에 반바지를 입는다.",
                 "operation": "main-"
             }
-        ]
+        ],
+        "image": {
+            "url": "https://cphoto.asiae.co.kr/listimglink/1/2020123110390994147_1609378748.jpg",
+            "reference": "아시아경제"
+        }
     },
     // 10번 질문
     {
@@ -203,8 +215,8 @@ export const QUESTIONS = [
             }
         ],
         "image": {
-            "url": "",
-            "reference": ""
+            "url": "https://png.pngtree.com/thumb_back/fw800/background/20230518/pngtree-the-main-area-of-a-men-s-clothing-store-image_2536090.jpg",
+            "reference": "Pngtree"
         }
     },
     // 11번 질문
@@ -240,119 +252,11 @@ export const CLOTHES_INNER = [['후드'], ['맨투맨', '니트'], ['화이트 �
 export const CLOTHES_UNDER = [['데님 팬츠', '슈트 팬츠'], ['데님 팬츠', '조거 팬츠'], ['데님 팬츠', '코튼 팬츠'], ['데님 팬츠']]
 
 export const ANIMAL_EMOJIS = {
-    독수리: '🦅',
-    코끼리: '🐘',
-    호랑이: '🐯',
-    사자: '🦁',
-    토끼: '🐰',
-    거북이: '🐢',
-    고슴도치: '🦔',
-}
-
-export function calcTotal(operations) {
-    let totalMain = 0
-    let totalSub = 0
-    let dep = 0
-
-    for (const val of operations) {
-        let increase
-
-        if (val[val.length - 1] === '+') {
-            increase = 1
-        } else {
-            increase = -1
-        }
-
-        if (val[0] === 'm') {
-            totalMain += increase
-        } else if (val[0] === 's') {
-            totalSub += increase
-        } else {
-            dep++
-        }
-    }
-
-    return {
-        totalMain,
-        totalSub,
-        dep,
-    }
-}
-
-function randint(max, min) {
-    return Math.floor(Math.random() * (max - min + 1)) + min
-}
-
-function combinationProcess(clothes, num) {
-    if (clothes[num].length > 1) {
-        const randNum = randint(0, clothes[num].length - 1)
-        const element = clothes[num][randNum]
-
-        return element
-    } else
-        return clothes[num][0]
-}
-
-function getRecommendations(totalMain, totalSub) {
-    let typeNum
-
-    if (totalMain > -7 && totalMain <= -3)
-        typeNum = 0
-    else if (totalMain > -3 && totalMain < 0)
-        typeNum = 1
-    else if (totalMain >= 0 && totalMain < 4)
-        typeNum = 2
-    else
-        typeNum = 3
-
-    let userAdv // advanture type
-
-    if (totalSub > 0)
-        userAdv = 'go'
-    else
-        userAdv = 'no'
-
-    const result = []
-    
-    if (userAdv[0] === 'n') {
-        result.push(combinationProcess(CLOTHES_OUTER, typeNum))
-        result.push(combinationProcess(CLOTHES_INNER, typeNum))
-        result.push(combinationProcess(CLOTHES_UNDER, typeNum))
-    } else {
-        let outer, inner, under
-
-        if (typeNum > 1 && typeNum < 4) { // 2 또는 3인 경우
-            outer = randint(typeNum - 1, typeNum + 1)
-            inner = randint(typeNum - 1, typeNum + 1)
-            under = randint(typeNum - 1, typeNum + 1)
-        } else if (typeNum === 1) {
-            outer = randint(typeNum, typeNum + 1)
-            inner = randint(typeNum, typeNum + 1)
-            under = randint(typeNum, typeNum + 1)
-        } else {
-            outer = randint(typeNum - 1, typeNum)
-            inner = randint(typeNum - 1, typeNum)
-            under = randint(typeNum - 1, typeNum)
-        }
-    
-        result.push(combinationProcess(CLOTHES_OUTER, outer))
-        result.push(combinationProcess(CLOTHES_INNER, inner))
-        result.push(combinationProcess(CLOTHES_UNDER, under))
-    }
-
-    return result
-}
-
-export function getData(operations) {
-    const { totalMain, totalSub, dep } = calcTotal(operations)
-    const recommendations = getRecommendations(totalMain, totalSub)
-    
-    return {
-        keywords: {
-            main: KEYWORDS_MAIN[totalMain + 7],
-            sub: KEYWORDS_SUB[totalSub + 5],
-            dep: KEYWORDS_DEP[dep],
-        },
-        recommendations,
-    }
+    '독수리': '🦅',
+    '코끼리': '🐘',
+    '호랑이': '🐯',
+    '사자': '🦁',
+    '토끼': '🐰',
+    '거북이': '🐢',
+    '고슴도치': '🦔',
 }

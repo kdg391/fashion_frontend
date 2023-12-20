@@ -83,6 +83,7 @@ main {
     max-width: 512px;
     width: 100%;
     margin: 0 auto;
+    padding-bottom: 12px;
 }
 
 #question {
@@ -118,6 +119,7 @@ main {
     transition: background-color 0.5s;
     font-weight: 600;
     font-size: 1.1rem;
+    margin-top: 8px;
 }
 
 #start-btn:hover {
@@ -154,6 +156,18 @@ main {
     height: 10px;
     background-color: #333;
     border-radius: 10px;
+}
+
+#outfits {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 16px;
+}
+
+#keyword {
+    font-size: 1.25rem;
+    margin-bottom: 24px;
 }
 
 @media screen and (max-width: 740px) {

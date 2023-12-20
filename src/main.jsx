@@ -22,6 +22,10 @@ const router = createBrowserRouter(
             path: '/result',
             element: <Result />,
         },
+        {
+            path: '*',
+            element: <h1>404 Not Found</h1>,
+        },
     ],
     {
         basename: '/fashion_frontend/',

@@ -22,18 +22,17 @@ const Test = () => {
                             <h3 id="question">
                                 {curIndex + 1}. {question}
                             </h3>
-                            {image?.url !== undefined && (
-                                <div id="img-container">
-                                    <img src={image.url} width={256} />
-                                    <span
-                                        style={{
-                                            fontSize: '.75rem',
-                                        }}
-                                    >
-                                        {image.reference}
-                                    </span>
-                                </div>
-                            )}
+                            <div id="img-container">
+                                <img
+                                    src={`./assets/images/questions/${
+                                        curIndex + 1
+                                    }.jpg`}
+                                    width={256}
+                                    alt="참고 이미지"
+                                    title={image.reference}
+                                    data-url={image.url} // 원본 이미지 URL
+                                />
+                            </div>
                         </div>
                         <div id="option-container">
                             {options.map(({ option, operation }, index) => (
